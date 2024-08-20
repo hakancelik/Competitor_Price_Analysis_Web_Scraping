@@ -1,74 +1,67 @@
-# Web Kazıma ile Rakip ve Fiyat Analizi
+# Web Scraping for Competitor and Price Analysis
 
-Bu proje, **Travel** ve **Nonfiction** kitap kategorilerindeki ürünlerin verilerini kazıyıp analiz etmek için hazırlanmıştır. **Selenium** ve **BeautifulSoup** kütüphaneleri kullanılarak **books.toscrape.com** sitesinden veri kazınmıştır. Proje, kitapların fiyatlarını, yıldız derecelendirmelerini ve diğer bilgilerini analiz etmek için kullanılır.
+This project is designed to scrape and analyze data for books in the **Travel** and **Nonfiction** categories from **books.toscrape.com**. Using **Selenium** and **BeautifulSoup**, the project extracts details about books, including prices and star ratings, and performs various analyses.
 
-## İçindekiler
+## Table of Contents
 
-1. [Proje Hedefi](#proje-hedefi)
-2. [Kurulum](#kurulum)
-3. [Kullanım](#kullanım)
-4. [Kod Açıklamaları](#kod-açıklamaları)
-5. [Görselleştirme](#görselleştirme)
-6. [Yazarlar](#yazarlar)
-7. [Lisans](#lisans)
+1. [Project Objective](#project-objective)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Code Explanation](#code-explanation)
+5. [Visualization](#visualization)
+6. [Authors](#authors)
+7. [License](#license)
 
-## Proje Hedefi
+## Project Objective
 
-Bu projede, **Travel** ve **Nonfiction** kitap kategorilerindeki kitapların detaylarını kazıyıp, fiyat ve yıldız derecelendirmeleri ile ilgili analizler yapılacaktır. Elde edilen verilerle çeşitli grafikler oluşturulacak ve analizler yapılacaktır.
+The goal of this project is to scrape data for books in the **Travel** and **Nonfiction** categories, and to analyze the prices and star ratings. The obtained data will be used to create various charts and perform analysis.
 
-## Kurulum
+## Installation
 
-Projenin çalışabilmesi için gerekli olan kütüphaneleri yüklemek gerekmektedir. Aşağıdaki komutları kullanarak gerekli kütüphaneleri yükleyebilirsiniz:
+To run the project, you'll need to install the required libraries. Use the following commands to install the necessary packages:
 
 ```bash
 pip install selenium beautifulsoup4 pandas matplotlib seaborn
 ```
+Additionally, you need to download ChromeDriver and place it in a suitable location on your computer. Update the executable_path in the setup_driver function with the path to your ChromeDriver executable.
 
-Ayrıca, ChromeDriver uygulamasını indirip bilgisayarınıza uygun bir yere yerleştirmeniz gerekmektedir. ChromeDriver'ın yolunu setup_driver fonksiyonundaki executable_path değişkenine girin.
+## Usage
 
-## Kullanım
+### Start and Configure the Browser
+Launch the browser and configure the necessary settings.
 
-### Tarayıcıyı Başlatma ve Konfigüre Etme
-Tarayıcıyı başlatın ve gerekli ayarları yapın.
+### Inspect the Homepage and Extract Category Links
+Open the homepage and extract the links for the "Travel" and "Nonfiction" categories.
 
-### Ana Sayfayı İnceleme ve Kategori Linklerini Çıkarma
-Ana sayfayı açın ve "Travel" ve "Nonfiction" kategorilerinin bağlantılarını kazıyın.
+### Inspect the Category Page and Extract Book Links
+On each category page, extract the links to the book detail pages. Manage pagination to gather all book links.
 
-### Kategori Sayfasını İnceleme ve Kitap Linklerini Çıkarma
-Her kategori sayfasında kitapların detay sayfalarına giden bağlantıları alın. Sayfalandırmayı yöneterek tüm kitapların linklerini çıkarın.
+### Inspect the Product Detail Page and Extract Data
+For each book detail page, extract the book title, price, star rating, description, and product information.
 
-### Ürün Detay Sayfasını İnceleme ve Verileri Çıkarma
-Her kitap detay sayfasına gidin ve kitap adı, fiyat, yıldız sayısı, açıklama ve ürün bilgilerini kazıyın.
+### Analyze and Visualize the Data
+Convert the extracted data into a pandas DataFrame and analyze it with various charts.
 
-### Verileri Analiz Etme ve Görselleştirme
-Elde edilen verileri bir pandas DataFrame'e dönüştürün ve çeşitli grafiklerle analiz edin.
+### Close the Browser
+After completing all tasks, close the browser and free up resources.
 
-### Tarayıcıyı Kapatma
-Tüm işlemler tamamlandıktan sonra tarayıcıyı kapatın ve kaynakları serbest bırakın.
+## Code Explanation
+The project includes the following key functions:
 
-## Kod Açıklamaları
+- `setup_driver(): Configures and starts the browser.
+- `get_category_urls(driver): Extracts the URLs for category pages.
+- `get_book_urls(driver, category_url, max_pagination=3): Extracts the URLs for book detail pages from a category page.
+- `get_book_details(driver, book_url): Scrapes details from a book's detail page.
+- `scrape_books(driver): Scrapes all books and collects data.
+- `visualize_data(df): Analyzes and visualizes the collected data.
 
-Proje, aşağıdaki temel işlevlere sahip Python kodlarından oluşur:
+## Visualization
+The project produces the following visualizations:
 
-- `setup_driver()`: Tarayıcıyı konfigüre eder ve başlatır.
-- `get_category_urls(driver)`: Kategori sayfalarının URL'lerini çıkarır.
-- `get_book_urls(driver, category_url, max_pagination=3)`: Kategori sayfasındaki kitapların detay URL'lerini çıkarır.
-- `get_book_details(driver, book_url)`: Bir kitap detay sayfasından bilgileri kazır.
-- `scrape_books(driver)`: Tüm kitapları kazır ve verileri toplar.
-- `visualize_data(df)`: Elde edilen verileri analiz eder ve görselleştirir.
-
-## Görselleştirme
-
-Projede elde edilen verilerle aşağıdaki görselleştirmeler yapılır:
-
-- **Kitap Fiyatları ve Yıldız Derecelendirmeleri**: Fiyatlar ile yıldız derecelendirmeleri arasındaki ilişkiyi gösterir.
-- **Fiyat Dağılımı**: Fiyatların kategorilere göre dağılımını gösterir.
-- **Yıldız Derecelendirme Dağılımı**: Yıldız derecelendirmelerinin dağılımını gösterir.
-
-## Yazarlar
-
-- Hakan Çelik - Proje Yöneticisi ve Geliştirici
-
-## Lisans
-
-Bu proje MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için LICENSE dosyasına bakabilirsiniz.
+- **Book Prices vs. Star Ratings: Shows the relationship between book prices and star ratings.
+- **Price Distribution: Displays the distribution of prices across categories.
+- **Star Rating Distribution: Illustrates the distribution of star ratings.
+- **Authors
+Hakan Çelik - Project Manager and Developer
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
